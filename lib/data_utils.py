@@ -1,7 +1,13 @@
+import math
 import numpy as np
 from sklearn import utils as skutils
 
-from rng import np_rng, py_rng
+from .rng import np_rng, py_rng
+
+try:
+    basestring
+except NameError:
+    basestring = str
 
 def center_crop(x, ph, pw=None):
     if pw is None:
@@ -47,9 +53,7 @@ def iter_data(*data, **kwargs):
         n = len(data[0])
     except:
         n = data[0].shape[0]
-    batches = n / size
-    if n % size != 0:
-        batches += 1
+    batches = math.ceil(n / size)
 
     for b in range(batches):
         start = b * size
